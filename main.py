@@ -3,17 +3,18 @@ import PySimpleGUI as sg
 import momotalk
 
 
-def display_ui() :
-
+def display_ui():
     # Set a Layout
     layout = [
-        [sg.Text("Stay on the Page then activate", key="row1",text_color="#509296",font=("Helvetica", 14, "bold"),background_color="#f0f0f0")],
-        [sg.Text("Please Adjust the screen before using", key="row2",text_color="#509296", font=("Helvetica", 12, "bold"),background_color="#f0f0f0")],
+        [sg.Text("Stay on the Page then activate", key="row1", text_color="#509296", font=("Helvetica", 14, "bold"),
+                 background_color="#f0f0f0")],
+        [sg.Text("Please Adjust the screen before using", key="row2", text_color="#509296",
+                 font=("Helvetica", 12, "bold"), background_color="#f0f0f0")],
         [],
         [sg.Multiline('', key='_Multiline_', size=(48, 7), autoscroll=True)],
-        [sg.Button("Adjust Screen", key="adjust_screen",button_color="#509296")],
-        [sg.Button("Momotalk", key="Momotalk",button_color="#509296")] +
-        [sg.Button("Main Quest", key="main_Quest",button_color="#509296")]
+        [sg.Button("Adjust Screen", key="adjust_screen", button_color="#509296")],
+        [sg.Button("Momotalk", key="Momotalk", button_color="#509296")] +
+        [sg.Button("Main Quest", key="main_Quest", button_color="#509296")]
     ]
 
     # window setting
@@ -30,7 +31,7 @@ def display_ui() :
     window.close()
 
 
-def ui_content(window) :
+def ui_content(window):
     while True:
         event, values = window.read()
         # if click momotalk
@@ -38,21 +39,19 @@ def ui_content(window) :
             momotalk.momotalk_routine(window)
 
         # if click main quest
-        if event == "main_quest" :
-            utils.update_gui_msg("aaa\n",window)
+        if event == "main_quest":
+            utils.update_gui_msg("aaa\n", window)
 
         # if click reset
-        if event == "adjust_screen" :
+        if event == "adjust_screen":
             window["row1"].update("Adjust Screen...")
             window.refresh()
             utils.adjust_screen(window)
 
-
         # Close app
-        if event == None or event == sg.WINDOW_CLOSED:
+        if event is None or event == sg.WINDOW_CLOSED:
             break
 
-display_ui()
 
-
-
+if __name__ == '__main__':
+    display_ui()
