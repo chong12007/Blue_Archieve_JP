@@ -1,6 +1,7 @@
 import utils
 import PySimpleGUI as sg
 import momotalk
+import main_quest
 
 
 def display_ui():
@@ -14,7 +15,7 @@ def display_ui():
         [sg.Multiline('', key='_Multiline_', size=(48, 7), autoscroll=True)],
         [sg.Button("Adjust Screen", key="adjust_screen", button_color="#509296")],
         [sg.Button("Momotalk", key="Momotalk", button_color="#509296")] +
-        [sg.Button("Main Quest", key="main_Quest", button_color="#509296")]
+        [sg.Button("Main Quest", key="main_quest", button_color="#509296")]
     ]
 
     # window setting
@@ -40,7 +41,7 @@ def ui_content(window):
 
         # if click main quest
         if event == "main_quest":
-            utils.update_gui_msg("aaa\n", window)
+            main_quest.routine(window)
 
         # if click reset
         if event == "adjust_screen":

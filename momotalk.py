@@ -30,7 +30,7 @@ def relationship_route(coordinate, window):
     utils.update_gui_msg("Relationship_Event detected\n", window)
     utils.click(coordinate, "", window)
 
-    coordinate = utils.get_icon_coordinate("img/relationship_event_entry_icon.png")
+    coordinate = utils.get_icon_coordinate("img/relationship_event_entry_icon_jp.png")
     utils.click(coordinate, "Sleep 15 seconds for animation\n", window)
 
     time.sleep(15)
@@ -47,7 +47,7 @@ def relationship_route(coordinate, window):
 
 def reply_msg_route(window):
     utils.update_gui_msg("", window)
-    coordinate = utils.get_icon_coordinate("img/reply_icon.png")
+    coordinate = utils.get_icon_coordinate("img/reply_icon_jp.png")
     coordinate = (coordinate[0], coordinate[1] + 30)
 
     # if reply button found then click

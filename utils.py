@@ -56,9 +56,9 @@ def take_screenshot():
 
 
 def get_icon_coordinate(icon_path):
-    screenshot = pyautogui.screenshot(region=(1000, 430, 450, 350))
-    screenshot.save("img/screenshotFindMsg.png")
-    screenshot_path = "img/screenshotFindMsg.png"
+    screenshot = pyautogui.screenshot(region=(1000, 430, 450, 390))
+    screenshot.save("img/screenshot.png")
+    screenshot_path = "img/screenshot.png"
     screenshot = cv2.imread(screenshot_path)
 
     # Load template image
@@ -80,12 +80,36 @@ def get_icon_coordinate(icon_path):
     else:
         return 0, 0
 
+def get_icon_coordinate_fullscreen(icon_path) :
+    screenshot = pyautogui.screenshot(region=(460, 250, 1000, 600))
+    screenshot.save("img/screenshot.png")
+    screenshot_path = "img/screenshot.png"
+    screenshot = cv2.imread(screenshot_path)
+
+    # Load template image
+    template = cv2.imread(icon_path)
+    # Perform template matching on the ROI
+    result = cv2.matchTemplate(screenshot, template, cv2.TM_SQDIFF_NORMED)
+
+    # Get the matched location within the ROI
+    # Set a threshold for the match
+    threshold = 0.1
+
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+    if min_val < threshold:
+        top_left = (min_loc[0], min_loc[1])
+        bottom_right = (top_left[0] + template.shape[1], top_left[1] + template.shape[0])
+        center = ((top_left[0] + bottom_right[0]) // 2, (top_left[1] + bottom_right[1]) // 2)
+        click_coordinate = (center[0] + 460, center[1] + 250)
+        return click_coordinate
+    else:
+        return 0,0
 
 def get_student_coordinate(icon_path):
     # Find left side
     screenshot = pyautogui.screenshot(region=(910, 430, 50, 350))
-    screenshot.save("img/screenshotFindStudent.png")
-    screenshot_path = "img/screenshotFindStudent.png"
+    screenshot.save("img/screenshot.png")
+    screenshot_path = "img/screenshot.png"
 
     screenshot = cv2.imread(screenshot_path)
 
@@ -115,8 +139,8 @@ def detect_color():
     color_to_detect = (255, 131, 153)  # Replace R, G, B with the desired RGB values
 
     screenshot = pyautogui.screenshot(region=(1035, 430, 450, 330))
-    screenshot.save("img/screenshotFindMsg.png")
-    screenshot_path = "img/screenshotFindMsg.png"
+    screenshot.save("img/screenshot.png")
+    screenshot_path = "img/screenshot.png"
 
     # Load screenshot
     screenshot = cv2.imread(screenshot_path)
@@ -182,11 +206,11 @@ def click(coordinate, msg, window):
 def check_conversation_end():
     # Take a screenshot
     screenshot = pyautogui.screenshot(region=(1000, 430, 450, 350))
-    screenshot.save("img/screenshotCompareMsg.png")
-    screenshot_path = "img/screenshotCompareMsg.png"
+    screenshot.save("img/screenshotCompare.png")
+    screenshot_path = "img/screenshotCompare.png"
 
     screenshot1 = cv2.imread(screenshot_path)
-    screenshot2 = cv2.imread("img/screenshotFindMsg.png")
+    screenshot2 = cv2.imread("img/screenshot.png")
     # Compare 2 screeshot
     diff = cv2.absdiff(screenshot1, screenshot2)
 
