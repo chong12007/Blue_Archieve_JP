@@ -2,7 +2,7 @@
 
 ## What it Does
 * Clear MomoTalk
-* Clear Main Quest
+* Clear Main Quest Story
 
 ## How To Download and run the code
 1. Go to Upper right <>Code
