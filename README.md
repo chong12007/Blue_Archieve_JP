@@ -28,3 +28,4 @@
 * Stay on Main Quest (only work if the "new" icon is there) and click Main Quest
 * Make sure to set the battle to 3x speed and auto skill
 * Dont work on final chapter that required to moving
+* Click the exit on the gui to stop running
