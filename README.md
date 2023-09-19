@@ -10,8 +10,8 @@
 5. Or Run main.py using pycharm
 
 ## Setup
-### Only tested on Bluestack
-
+* Screen Resolution Setting
+---
 ![screen resolution image](github_img/screen_resolution.png)
 ---
 ![emulator_screen resolution image](github_img/emulator_screen_resolution.png)
