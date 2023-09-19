@@ -1,3 +1,5 @@
+# Only Work For JP Version
+
 ## What it Does
 * Clear MomoTalk
 * Clear Main Quest
