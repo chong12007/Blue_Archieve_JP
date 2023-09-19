@@ -15,3 +15,9 @@
 ![screen resolution image](github_img/screen_resolution.png)
 ---
 ![emulator_screen resolution image](github_img/emulator_screen_resolution.png)
+---
+
+## Supported Emulator
+1.BlueStack (Tested)
+2.MEmu (not tested but should work)
+3.Nox Player (not tested)
