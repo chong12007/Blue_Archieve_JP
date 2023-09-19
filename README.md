@@ -9,6 +9,8 @@
 4. Execute the main.exe
 5. Or Run main.py using pycharm
 
-## Setting Before using
-* Your Screen Resolution Should be
+## Setup
+### Only tested on Bluestack
+
 ![screen resolution image](github_img/screen_resolution.png)
+![emulator_screen resolution image](github_img/emulator_screen_resolution.png)
