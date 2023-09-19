@@ -34,7 +34,7 @@ def relationship_route(coordinate, window):
     utils.click(coordinate, "Sleep 15 seconds for animation\n", window)
 
     time.sleep(15)
-    utils.update_gui_msg("Display Skip Event", window)
+    utils.update_gui_msg("Display Skip Event\n", window)
     pyautogui.typewrite(['esc'])
 
     time.sleep(2)
@@ -73,8 +73,8 @@ def momotalk_routine(window):
         window["row1"].update(f"Momotalk Cleared : {count}", text_color="#509296", font=("Helvetica", 16, "bold"),
                               background_color="#f0f0f0")
         window.refresh()
-        # active bluestack
-        window.active_windows()
+        # # active bluestack
+        # window.active_windows()
 
         # Click student
         click_student(window)
@@ -103,3 +103,11 @@ def momotalk_routine(window):
         time.sleep(5)
         count += 1
         utils.update_gui_msg("Conversation ended...\n\n", window)
+
+
+def momotalk_main(window):
+    app_found, app_window = utils.detect_app()
+    if app_found:
+        momotalk_routine(window)
+    else:
+        utils.app_not_found(window)

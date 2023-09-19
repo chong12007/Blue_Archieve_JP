@@ -43,7 +43,7 @@ def battle_routine(window):
     utils.click(coordinate, "Engage\n", window)
 
     # Enter battle
-    utils.update_gui_msg("Sleep 60 Seconds", window)
+    utils.update_gui_msg("Sleep 60 Seconds\n", window)
     time.sleep(60)
     while True:
 
@@ -52,7 +52,7 @@ def battle_routine(window):
 
         if coordinate[0] != 0:
             utils.click(coordinate, "Battle ended\n", window)
-            utils.update_gui_msg("Sleep 10 Seconds", window)
+            utils.update_gui_msg("Sleep 10 Seconds\n", window)
             time.sleep(10)
             coordinate = utils.get_icon_coordinate_fullscreen("img/menu_icon_jp.png")
 
@@ -65,14 +65,13 @@ def battle_routine(window):
                 utils.click(coordinate, "Skip Event\n", window)
                 break
 
-        utils.update_gui_msg("Battle still not ended,Sleep 45 Seconds", window)
+        utils.update_gui_msg("Battle still not ended,Sleep 45 Seconds\n", window)
         time.sleep(45)
 
 
 def story(window, battle):
-
     coordinate = utils.get_icon_coordinate("img/story_event_entry_icon_jp.png")
-    utils.click(coordinate, "New Story Clicked", window)
+    utils.click(coordinate, "New Story Clicked\n", window)
 
     coordinate = utils.get_icon_coordinate_fullscreen("img/entry_jp_icon.png")
     utils.click(coordinate, "Sleep 15 Seconds for animation\n", window)
@@ -106,3 +105,11 @@ def routine(window):
         else:
             utils.update_gui_msg("No new story found\n", window)
             break
+
+
+def main_quest_main(window):
+    app_found, app_window = utils.detect_app()
+    if app_found:
+        routine(window)
+    else:
+        utils.app_not_found(window)

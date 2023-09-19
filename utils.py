@@ -8,34 +8,47 @@ import pyautogui
 import cv2
 
 
-def adjust_screen(window):
-    try:
-        app_title = "Bluestack"  # Replace with the actual window title of Notepad.
-        notepad_window = gw.getWindowsWithTitle(app_title)[0]
+def detect_app():
+    app_titles = ["Bluestack", "Memu", "Nox"]
 
+    # Find the window with a matching title
+    app_window = None
+    for title in app_titles:
+        try:
+            app_window = gw.getWindowsWithTitle(title)[0]
+            break
+        except IndexError:
+            pass
+
+    if app_window:
+        return True, app_window
+    else:
+        return False, None
+
+
+def adjust_screen(window):
+    app_found, app_window = detect_app()
+
+    if app_found:
         # Resize the window
-        notepad_window.resizeTo(998, 577)
+        app_window.resizeTo(998, 577)
 
         # Get Screen Center
         screen_width = ctypes.windll.user32.GetSystemMetrics(0)
         screen_height = ctypes.windll.user32.GetSystemMetrics(1)
 
-        window_width = notepad_window.width
-        window_height = notepad_window.height
+        window_width = app_window.width
+        window_height = app_window.height
 
         screen_center_x = (screen_width - window_width) // 2
         screen_center_y = (screen_height - window_height) // 2
 
-        # Get the window handle (HWND) of the target window
-        window_handle = ctypes.windll.user32.FindWindowW(None, app_title)
-
-        # Bring the window to the front
-        ctypes.windll.user32.SetForegroundWindow(window_handle)
+        app_window.activate()
 
         # Select app
         time.sleep(1)
         # Move the window to the center of the screen
-        notepad_window.moveTo(screen_center_x, screen_center_y)
+        app_window.moveTo(screen_center_x, screen_center_y)
 
         window["row1"].update("Screen Adjusted!!", text_color="#509296", font=("Helvetica", 16, "bold"),
                               background_color="#f0f0f0")
@@ -43,11 +56,22 @@ def adjust_screen(window):
                               background_color="#f0f0f0")
         window.refresh()
 
-    except IndexError:
-        window["row1"].update("Error :(", text_color="red", font=("Helvetica", 16, "bold"), background_color="#f0f0f0")
-        window["row2"].update("Unable to detect Bluestack", text_color="red", font=("Helvetica", 12, "bold"),
-                              background_color="#f0f0f0")
-        window.refresh()
+    else:
+        app_not_found(window)
+
+
+def app_not_found(window):
+    window["row1"].update("Error :(", text_color="red", font=("Helvetica", 16, "bold"), background_color="#f0f0f0")
+    window["row2"].update("Unable to detect Emulator", text_color="red", font=("Helvetica", 12, "bold"),
+                          background_color="#f0f0f0")
+    update_gui_msg("Supported Emulator :\nBluestack(Tested)\nMEmu\nNox\n\n\n", window)
+    window.refresh()
+
+
+def get_screen_resolution():
+    screen_width = ctypes.windll.user32.GetSystemMetrics(0)
+    screen_height = ctypes.windll.user32.GetSystemMetrics(1)
+    return screen_width, screen_height
 
 
 def take_screenshot():
@@ -57,8 +81,8 @@ def take_screenshot():
 
 def get_icon_coordinate(icon_path):
     screenshot = pyautogui.screenshot(region=(1000, 430, 450, 390))
-    screenshot.save("img/screenshot.png")
-    screenshot_path = "img/screenshot.png"
+    screenshot.save("img/screenshot1.png")
+    screenshot_path = "img/screenshot1.png"
     screenshot = cv2.imread(screenshot_path)
 
     # Load template image
@@ -80,7 +104,8 @@ def get_icon_coordinate(icon_path):
     else:
         return 0, 0
 
-def get_icon_coordinate_fullscreen(icon_path) :
+
+def get_icon_coordinate_fullscreen(icon_path):
     screenshot = pyautogui.screenshot(region=(460, 250, 1000, 600))
     screenshot.save("img/screenshot.png")
     screenshot_path = "img/screenshot.png"
@@ -103,7 +128,8 @@ def get_icon_coordinate_fullscreen(icon_path) :
         click_coordinate = (center[0] + 460, center[1] + 250)
         return click_coordinate
     else:
-        return 0,0
+        return 0, 0
+
 
 def get_student_coordinate(icon_path):
     # Find left side
@@ -187,7 +213,7 @@ def update_gui_msg(msg, window):
     global msg_history
 
     msg_history += msg
-    window.Element('_Multiline_').Update(msg_history)
+    window.Element('_Multiline_').Update(msg_history, font=("Helvetica", 10, "bold"))
     window.refresh()
 
 
@@ -205,12 +231,12 @@ def click(coordinate, msg, window):
 
 def check_conversation_end():
     # Take a screenshot
-    screenshot = pyautogui.screenshot(region=(1000, 430, 450, 350))
+    screenshot = pyautogui.screenshot(region=(1000, 430, 450, 390))
     screenshot.save("img/screenshotCompare.png")
     screenshot_path = "img/screenshotCompare.png"
 
     screenshot1 = cv2.imread(screenshot_path)
-    screenshot2 = cv2.imread("img/screenshot.png")
+    screenshot2 = cv2.imread("img/screenshot1.png")
     # Compare 2 screeshot
     diff = cv2.absdiff(screenshot1, screenshot2)
 
@@ -228,5 +254,9 @@ def check_conversation_end():
     total_pixels = thresholded_diff_gray.shape[0] * thresholded_diff_gray.shape[1]
     similarity_percentage = (non_zero_pixels / total_pixels) * 100
 
-    print(similarity_percentage)
     return similarity_percentage
+
+
+if __name__ == '__main__':
+    screenshot = pyautogui.screenshot(region=(460, 250, 1000, 600))
+    screenshot.save("img/screenshot.png")
