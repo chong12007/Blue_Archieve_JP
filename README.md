@@ -13,4 +13,5 @@
 ### Only tested on Bluestack
 
 ![screen resolution image](github_img/screen_resolution.png)
+---
 ![emulator_screen resolution image](github_img/emulator_screen_resolution.png)
