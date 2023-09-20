@@ -13,6 +13,8 @@ def find_new_story():
         return 0, 0
     return new_icon_coordinate
 
+def get_entry_coordinate(screenshot_area) :
+    return (screenshot_area[0] + 50,screenshot_area[1] + 30)
 
 def determine_battle_story(new_icon_coordinate):
     # Get new icon coordinate then get a screenshot of entry area
@@ -31,9 +33,9 @@ def determine_battle_story(new_icon_coordinate):
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
     print(min_val)
     if min_val < threshold:
-        return True
+        return True,screenshot_area
     else:
-        return False
+        return False,screenshot_area
 
 
 def battle_routine(window):
@@ -43,8 +45,8 @@ def battle_routine(window):
     utils.click(coordinate, "Engage\n", window)
 
     # Enter battle
-    utils.update_gui_msg("Sleep 60 Seconds\n", window)
-    time.sleep(60)
+    utils.update_gui_msg("Sleep 90 Seconds\n", window)
+    time.sleep(90)
     while True:
 
         # Every 45 seconds check if the battle end
@@ -52,8 +54,8 @@ def battle_routine(window):
 
         if coordinate[0] != 0:
             utils.click(coordinate, "Battle ended\n", window)
-            utils.update_gui_msg("Sleep 10 Seconds\n", window)
-            time.sleep(10)
+            utils.update_gui_msg("Sleep 20 Seconds\n", window)
+            time.sleep(20)
             coordinate = utils.get_icon_coordinate_fullscreen("img/menu_icon_jp.png")
 
             if coordinate[0] != 0:
@@ -71,9 +73,15 @@ def battle_routine(window):
         utils.update_gui_msg("Battle still not ended,Sleep 45 Seconds\n", window)
         time.sleep(45)
 
+        event_end,coordinate = utils.check_if_event_end()
+        if event_end :
+            break
 
-def story(window, battle):
-    coordinate = utils.get_icon_coordinate("img/story_event_entry_icon_jp.png")
+
+
+def story(window, battle,screenshot_area):
+
+    coordinate = get_entry_coordinate(screenshot_area)
     utils.click(coordinate, "New Story Clicked\n", window)
 
     coordinate = utils.get_icon_coordinate_fullscreen("img/entry_jp_icon.png")
@@ -94,8 +102,10 @@ def story(window, battle):
         battle_routine(window)
 
     time.sleep(10)
-    utils.click(coordinate, "Story ended\n", window)
-    time.sleep(5)
+    event_end, coordinate = utils.check_if_event_end()
+
+    utils.click(coordinate, "Story ended Sleep 15 second\n", window)
+    time.sleep(15)
 
 
 def routine(window):
@@ -105,9 +115,9 @@ def routine(window):
 
         if new_icon_coordinate[0] != 0:
             # determine if the story require battle
-            battle = determine_battle_story(new_icon_coordinate)
+            battle,screenshot_area = determine_battle_story(new_icon_coordinate)
             # clear the story
-            story(window, battle)
+            story(window, battle,screenshot_area)
         else:
             utils.update_gui_msg("No new story found\n", window)
             break
@@ -119,3 +129,7 @@ def main_quest_main(window):
         routine(window)
     else:
         utils.app_not_found(window)
+
+
+
+

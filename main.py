@@ -36,7 +36,9 @@ def display_ui():
     window.close()
 
 
+
 def ui_content(window):
+
     while True:
         event, values = window.read()
         # if click momotalk

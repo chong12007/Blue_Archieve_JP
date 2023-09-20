@@ -7,7 +7,7 @@ import numpy as np
 import pyautogui
 import cv2
 
-
+pyautogui.FAILSAFE = False
 def detect_app():
     app_titles = ["Bluestack", "Memu", "Nox"]
 
@@ -256,7 +256,11 @@ def check_conversation_end():
 
     return similarity_percentage
 
+def check_if_event_end() :
+    event_end = False
+    coordinate = get_icon_coordinate_fullscreen("img/touch_icon.png")
+    if coordinate[0] != 0 :
+        event_end = True
+    return event_end,coordinate
 
-if __name__ == '__main__':
-    screenshot = pyautogui.screenshot(region=(460, 250, 1000, 600))
-    screenshot.save("img/screenshot.png")
+
