@@ -9,7 +9,7 @@ def find_new_story():
     new_icon_coordinate = utils.get_icon_coordinate_fullscreen("img/new_story_icon.png")
     # if coordinate is 0 means no new story detected
     if new_icon_coordinate[0] == 0:
-        print("no coordinate")
+
         return 0, 0
     return new_icon_coordinate
 
@@ -57,8 +57,11 @@ def battle_routine(window):
             coordinate = utils.get_icon_coordinate_fullscreen("img/menu_icon_jp.png")
 
             if coordinate[0] != 0:
-                utils.update_gui_msg("Display Skip Event\n", window)
-                pyautogui.typewrite(['esc'])
+                coordinate = utils.get_icon_coordinate_fullscreen("img/menu_icon_jp.png")
+                utils.click(coordinate, "Display Skip Event\n", window)
+
+                coordinate = utils.get_icon_coordinate_fullscreen("img/skip_icon.png")
+                utils.click(coordinate, "", window)
 
                 time.sleep(2)
                 coordinate = utils.get_icon_coordinate("img/ok_icon.png")
@@ -77,8 +80,11 @@ def story(window, battle):
     utils.click(coordinate, "Sleep 15 Seconds for animation\n", window)
     time.sleep(15)
 
-    utils.update_gui_msg("Display Skip Event\n", window)
-    pyautogui.typewrite(['esc'])
+    coordinate = utils.get_icon_coordinate_fullscreen("img/menu_icon_jp.png")
+    utils.click(coordinate, "Display Skip Event\n", window)
+
+    coordinate = utils.get_icon_coordinate_fullscreen("img/skip_icon.png")
+    utils.click(coordinate, "", window)
 
     time.sleep(2)
     coordinate = utils.get_icon_coordinate("img/ok_icon.png")
@@ -87,7 +93,7 @@ def story(window, battle):
     if battle:
         battle_routine(window)
 
-    time.sleep(5)
+    time.sleep(10)
     utils.click(coordinate, "Story ended\n", window)
     time.sleep(5)
 

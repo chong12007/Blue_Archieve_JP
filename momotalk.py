@@ -34,8 +34,12 @@ def relationship_route(coordinate, window):
     utils.click(coordinate, "Sleep 15 seconds for animation\n", window)
 
     time.sleep(15)
-    utils.update_gui_msg("Display Skip Event\n", window)
-    pyautogui.typewrite(['esc'])
+
+    coordinate = utils.get_icon_coordinate_fullscreen("img/menu_icon_jp.png")
+    utils.click(coordinate, "Display Skip Event\n", window)
+
+    coordinate = utils.get_icon_coordinate_fullscreen("img/skip_icon.png")
+    utils.click(coordinate, "", window)
 
     time.sleep(2)
     coordinate = utils.get_icon_coordinate("img/ok_icon.png")
