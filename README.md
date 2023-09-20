@@ -21,7 +21,7 @@
 
 ## Supported Emulator
 1.BlueStack (Tested)    
-2.MEmu (not tested but should work)    
+2.MEmu (Tested)    
 3.Nox Player (not tested)    
 
 # How To Use
