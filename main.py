@@ -1,6 +1,7 @@
-import webbrowser
-
+import time
 import utils
+import ctypes
+import webbrowser
 import PySimpleGUI as sg
 from momotalk import momotalk_main
 from main_quest import main_quest_main
@@ -36,9 +37,7 @@ def display_ui():
     window.close()
 
 
-
 def ui_content(window):
-
     while True:
         event, values = window.read()
         # if click momotalk
@@ -53,7 +52,42 @@ def ui_content(window):
         if event == "adjust_screen":
             window["row1"].update("Adjust Screen...")
             window.refresh()
-            utils.adjust_screen(window)
+
+            def adjust_screen(window):
+                app_found, app_window = utils.detect_app()
+
+                if app_found:
+                    # Resize the window
+                    app_window.resizeTo(998, 577)
+
+                    # Get Screen Center
+                    screen_width = ctypes.windll.user32.GetSystemMetrics(0)
+                    screen_height = ctypes.windll.user32.GetSystemMetrics(1)
+
+                    window_width = app_window.width
+                    window_height = app_window.height
+
+                    screen_center_x = (screen_width - window_width) // 2
+                    screen_center_y = (screen_height - window_height) // 2
+
+                    app_window.activate()
+
+                    # Select app
+                    time.sleep(1)
+                    # Move the window to the center of the screen
+                    app_window.moveTo(screen_center_x, screen_center_y)
+
+                    window["row1"].update("Screen Adjusted!!", text_color="#509296", font=("Helvetica", 16, "bold"),
+                                          background_color="#f0f0f0")
+                    window["row2"].update("yay d >w< b yay", text_color="#509296", font=("Helvetica", 12, "bold"),
+                                          background_color="#f0f0f0")
+                    window.refresh()
+
+                else:
+                    utils.app_not_found(window)
+
+            adjust_screen(window)
+
         if event == "github":
             webbrowser.open("https://github.com/chong12007/Blue_Archieve_JP.git")
 
