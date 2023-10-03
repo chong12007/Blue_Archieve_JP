@@ -1,5 +1,5 @@
 # Only Work For JP Version
-https://youtu.be/QwM-apcyOaU
+https://youtu.be/Km3SwzEfHEg
 
 ## What it Does
 * Clear MomoTalk
