@@ -60,7 +60,7 @@ def momotalk_routine(window):
                 if student_coordinate[1] == stu_coord[1]:
                     student_coordinate = (student_coordinate[0], + student_coordinate[1] + 50)
                 # if y exceed 740, scroll down student page and clear the list
-                if student_coordinate[1] >= 740:
+                if student_coordinate[1] >= 690:
                     def scroll_student(click_coordinate):
                         pyautogui.doubleClick(click_coordinate[0], click_coordinate[1], button="left")
                         time.sleep(2)
