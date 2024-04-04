@@ -84,6 +84,7 @@ def get_icon_coordinate_fullscreen(icon_path):
         bottom_right = (top_left[0] + template.shape[1], top_left[1] + template.shape[0])
         center = ((top_left[0] + bottom_right[0]) // 2, (top_left[1] + bottom_right[1]) // 2)
         click_coordinate = (center[0] + 460, center[1] + 250)
+        print(click_coordinate)
         return click_coordinate
     else:
         return 0, 0
@@ -114,3 +115,12 @@ def check_if_event_end():
     if coordinate[0] != 0:
         event_end = True
     return event_end, coordinate
+
+if __name__ == '__main__':
+    new_icon_coordinate = get_icon_coordinate_fullscreen("img/star.png")
+    print(new_icon_coordinate)
+    pyautogui.click(new_icon_coordinate)
+    # if coordinate is 0 means no new story detected
+
+
+

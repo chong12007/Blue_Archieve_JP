@@ -5,6 +5,7 @@ import webbrowser
 import PySimpleGUI as sg
 from momotalk import momotalk_main
 from main_quest import main_quest_main
+from event_story import event_story_main
 
 
 def display_ui():
@@ -18,7 +19,8 @@ def display_ui():
         [sg.Multiline('', key='_Multiline_', size=(48, 7), autoscroll=True)],
         [sg.Button("Adjust Screen", key="adjust_screen", button_color="#509296")],
         [sg.Button("Momotalk", key="Momotalk", button_color="#509296")] +
-        [sg.Button("Main Quest", key="main_quest", button_color="#509296")],
+        [sg.Button("Main Quest", key="main_quest", button_color="#509296")] +
+        [sg.Button("Event Story", key="event", button_color="#509296")],
         [sg.Text("Please leave a star on my github if this script helps you T^T,Click me to github", key="github",
                  enable_events=True, text_color='blue', background_color="#f0f0f0")]
     ]
@@ -91,6 +93,8 @@ def ui_content(window):
         if event == "github":
             webbrowser.open("https://github.com/chong12007/Blue_Archieve_JP.git")
 
+        if event == "event":
+            event_story_main(window)
         # Close app
         if event is None or event == sg.WINDOW_CLOSED:
             break
