@@ -75,7 +75,7 @@ def ui_content(window):
                     app_window.activate()
 
                     # Select app
-                    time.sleep(2)
+                    time.sleep(1)
                     # Move the window to the center of the screen
                     app_window.moveTo(screen_center_x, screen_center_y)
 

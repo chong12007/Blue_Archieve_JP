@@ -97,9 +97,8 @@ def update_gui_msg(msg, window):
     global msg_history
 
     msg_history += msg
-    if msg_history:
-        window.Element('_Multiline_').Update(msg_history, font=("Helvetica", 10, "bold"))
-        window.refresh()
+    window.Element('_Multiline_').Update(msg_history, font=("Helvetica", 10, "bold"))
+    window.refresh()
 
 
 def click(coordinate, msg, window):
